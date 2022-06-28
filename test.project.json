@@ -1,0 +1,26 @@
+{
+  "name": "koute",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "Packages": {
+        "$path": "Packages",
+
+        "Koute": {
+          "$path": "src"
+        }
+      }
+    },
+
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "Client": {
+          "$path": "tests"
+        }
+      }
+    }
+  }
+}
