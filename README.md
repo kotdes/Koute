@@ -1,7 +1,10 @@
 # Koute
 A minimal and lightweight routing library for Fusion.
 
-| Installation Method | Instructions |
+> **Warning**
+> If trying to install Koute, follow the instructions below but not clone this branch.
+
+| Installation Methods | Instructions |
 | ------------- | ------------- |
 | Wally | Append `Koute = "7kayoh/koute@0.1.0-beta"` into `wally.toml` |
 | Binary (`.rbxm`) | Coming Soon |
