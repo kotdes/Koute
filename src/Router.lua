@@ -7,13 +7,27 @@ local State = Fusion.State
 local class = {}
 class.__index = class
 
+local function archive(tbl)
+    local newTbl = {}
+    for index, value in tbl do
+        if value.Type == "State" and value.get then
+            newTbl[index] = value:get()
+        elseif type(value) == "table" then
+            newTbl[index] = table.clone(value)
+        else
+            newTbl[index] = value
+        end
+    end
+    return newTbl
+end
+
 function class:set(route, params, options)
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
     options = options or {}
     for index, value in route.Meta do
-        if type(value) == "table" and value.Type == "$k-dynamic" then
-            route.Meta[index] = value(self)
+        if value.Type == "$k-dynamic" and type(value.Value) == "function" then
+            route.Meta[index] = value.Value(route, params)
         end
     end
     self.Serving.Meta:set(route.Meta or {})
@@ -22,14 +36,9 @@ function class:set(route, params, options)
     self.Serving.Params.Router = self
     self.Serving.View:set(route.View)
     if not options.noHistory and self.Serving.Path:get() ~= prevPath then
-        local params = table.clone(self.Serving.Params)
-        params.Router = nil
-        table.insert(self.History, {
-            Path = self.Serving.Path:get(),
-            View = self.Serving.View:get(),
-            Meta = self.Serving.Meta:get(),
-            Params = params
-        })
+        local archived = archive(self.Serving)
+        archived.Params.Router = nil
+        table.insert(self.History, archived)
     end
 end
 
