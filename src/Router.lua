@@ -68,21 +68,23 @@ end
 
 return function(params)
     local function destruct(node)
-        local nodes = { node }
-        if node[Children] then
-            for _, children in node[Children] do
-                for _, item in destruct(children) do
-                    table.insert(nodes, item)
+        local items = {}
+        if node.Type == "$k-route" then
+            local newRoute = table.clone(node)
+            newRoute._isHead = true
+            newRoute[Children] = nil
+            table.insert(items, newRoute)
                 end
+        for _, route in node[Children] or {} do
+            for _, item in destruct(route) do
+                item.Path = PathAnalyzer.format((node.Path or "") .. item.Path)
+                table.insert(items, item)
             end
         end
-        return nodes
-    end
-    if not params[Children].compiled then
-        params[Children]._compile()
+        return items
     end
     local router = setmetatable({
-        Routes = destruct(params[Children]),
+        Routes = destruct(params),
         History = {},
         Serving = {
             Path = State(),
