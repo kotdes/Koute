@@ -88,11 +88,11 @@ return function(params)
         History = {},
         Serving = {
             Path = State(),
-            View = State(),
+            View = State(function() end),
             Meta = State({}),
             Params = {},
         }
     }, class)
-    router:go("/")
+    router:go(params.DefaultPath or "/")
     return router
 end
