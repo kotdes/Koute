@@ -43,6 +43,7 @@ function class:set(route, params, options)
 end
 
 function class:go(path: string, params, options)
+    assert(type(path) == "string", "Passing non-string value to :go(), malfunctioning")
     local match = nil
     path = PathAnalyzer.format(path)
     for _, route in self.Routes do
@@ -74,7 +75,7 @@ return function(params)
             newRoute._isHead = true
             newRoute[Children] = nil
             table.insert(items, newRoute)
-                end
+        end
         for _, route in node[Children] or {} do
             for _, item in destruct(route) do
                 item.Path = PathAnalyzer.format((node.Path or "") .. item.Path)
