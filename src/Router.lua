@@ -21,7 +21,7 @@ local function archive(tbl)
     return newTbl
 end
 
-function class:set(route, params, options)
+function class:_set(route, params, options)
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
     options = options or {}
@@ -38,7 +38,7 @@ function class:set(route, params, options)
     if not options.noHistory and self.Serving.Path:get() ~= prevPath then
         local archived = archive(self.Serving)
         archived.Params.Router = nil
-        table.insert(self.History, archived)
+        table.insert(self._history, archived)
     end
 end
 
@@ -46,14 +46,14 @@ function class:go(path: string, params, options)
     assert(type(path) == "string", "Passing non-string value to :go(), malfunctioning")
     local match = nil
     path = PathAnalyzer.format(path)
-    for _, route in self.Routes do
+    for _, route in self._routes do
         if route.Path == path then
             match = route
             break
         end
     end
     if match then
-        self:set(match, params, options)
+        self:_set(match, params, options)
         return true
     end
     return false
@@ -61,9 +61,9 @@ end
 
 function class:back(level: number?)
     level = level or 1
-    local match = self.History[#self.History - level]
+    local match = self._history[#self._history - level]
     if match then
-        self:set(match, match.Params, { noHistory = true })
+        self:_set(match, match.Params, { noHistory = true })
     end
 end
 
@@ -84,8 +84,8 @@ return function(params)
         return items
     end
     local router = setmetatable({
-        Routes = destruct(params),
-        History = {},
+        _routes = destruct(params),
+        _history = {},
         Serving = {
             Path = State(),
             View = State(function() end),
