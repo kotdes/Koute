@@ -72,7 +72,6 @@ return function(params)
         local items = {}
         if node.Type == "$k-route" then
             local newRoute = table.clone(node)
-            newRoute._isHead = true
             newRoute[Children] = nil
             table.insert(items, newRoute)
         end
