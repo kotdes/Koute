@@ -8,7 +8,19 @@ local State = Fusion.State
 local class = {}
 class.__index = class
 
-local function archive(tbl)
+type RouteOptions = {
+    noHistory: boolean?
+}
+
+type Route = {
+    Type: typeof(Symbols.Route),
+    Path: string,
+    Meta: { [any]: any },
+    View: (any) -> (GuiObject),
+    [any]: any, -- this is painful to look at
+}
+
+local function archive(tbl: { [any]: any })
     local newTbl = {}
     for index, value in tbl do
         if value.Type == "State" and value.get then
@@ -22,7 +34,7 @@ local function archive(tbl)
     return newTbl
 end
 
-function class:_set(route, params, options)
+function class:_set(route: Route, params: {[ any]: any }, options: RouteOptions)
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
     options = options or {}
@@ -43,7 +55,7 @@ function class:_set(route, params, options)
     end
 end
 
-function class:go(path: string, params, options)
+function class:go(path: string, params: { [any]: any }, options: RouteOptions)
     assert(type(path) == "string", "Passing non-string value to :go(), malfunctioning")
     local match = nil
     path = PathAnalyzer.format(path)
