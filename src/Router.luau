@@ -1,5 +1,6 @@
 local Fusion = require(script.Parent.Parent.Fusion)
 local PathAnalyzer = require(script.Parent.PathAnalyzer)
+local Symbols = require(script.Parent.Symbols)
 
 local Children = Fusion.Children
 local State = Fusion.State
@@ -26,7 +27,7 @@ function class:_set(route, params, options)
     route = table.clone(route)
     options = options or {}
     for index, value in route.Meta do
-        if value.Type == "$k-dynamic" and type(value.Value) == "function" then
+        if value.Type == Symbols.Dynamic then
             route.Meta[index] = value.Value(route, params)
         end
     end
@@ -70,7 +71,7 @@ end
 return function(params)
     local function destruct(node)
         local items = {}
-        if node.Type == "$k-route" then
+        if node.Type == Symbols.Route then
             local newRoute = table.clone(node)
             newRoute[Children] = nil
             table.insert(items, newRoute)
@@ -86,6 +87,7 @@ return function(params)
     local router = setmetatable({
         _routes = destruct(params),
         _history = {},
+        Type = Symbols.Router,
         Serving = {
             Path = State(),
             View = State(function() end),

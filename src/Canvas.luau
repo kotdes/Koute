@@ -1,4 +1,5 @@
 local Fusion = require(script.Parent.Parent.Fusion)
+local Symbols = require(script.Parent.Symbols)
 
 local Children = Fusion.Children
 local State = Fusion.State
@@ -7,6 +8,7 @@ local New = Fusion.New
 local OnEvent = Fusion.OnEvent
 
 return function(params)
+    assert(params.Source and params.Source.Type == Symbols.Router, "Canvas.Source expects Router, got invalid datatype")
     local page = State()
     local function render()
         if params.PreRender then params.PreRender() end

@@ -1,6 +1,8 @@
+local Symbols = require(script.Parent.Symbols)
+
 return function(func: (any) -> (any))
     return {
-        Type = "$k-dynamic",
+        Type = Symbols.Dynamic,
         Value = func,
     }
 end
