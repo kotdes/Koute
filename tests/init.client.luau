@@ -13,7 +13,7 @@ local Canvas = Koute.Canvas
 local Children = Fusion.Children
 local New = Fusion.New
 
-local paths, current = {"/", "/a", "/b", "/a/b"}, 1
+local paths, current = {"/", "/a", "/b", "/a/b", "/a/b/cd"}, 1
 local appRouter = Router {
     [Children] = {
         Route "/" {
@@ -39,6 +39,16 @@ local appRouter = Router {
                                     Text = params.Router.Serving.Path
                                 }
                             end,
+                            [Children] = {
+                                Route "/cd" {
+                                    View = function(params)
+                                        return New "TextLabel" {
+                                            Size = UDim2.fromScale(1, 1),
+                                            Text = "foo!!!!",
+                                        }
+                                    end,
+                                }
+                            }
                         }
                     }
                 },
