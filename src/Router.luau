@@ -55,21 +55,12 @@ function class:_set(route: Route, params: {[ any]: any }, options: RouteOptions)
     end
 end
 
-function class:go(path: string, params: { [any]: any }, options: RouteOptions)
+function class:go(path: string, params: { [any]: any }?, options: RouteOptions?)
     assert(type(path) == "string", "Passing non-string value to :go(), malfunctioning")
-    local match = nil
-    path = PathAnalyzer.format(path)
-    for _, route in self._routes do
-        if route.Path == path then
-            match = route
-            break
-        end
-    end
+    local match = self._routes[PathFormat(path)]
     if match then
         self:_set(match, params, options)
-        return true
     end
-    return false
 end
 
 function class:back(level: number?)
@@ -90,14 +81,19 @@ return function(params)
         end
         for _, route in node[Children] or {} do
             for _, item in destruct(route) do
-                item.Path = PathAnalyzer.format((node.Path or "") .. item.Path)
+                item.Path = PathFormat((node.Path or "") .. item.Path)
                 table.insert(items, item)
             end
         end
         return items
     end
+    params = destruct(params)
+    for index, route in params do
+        params[index] = nil
+        params[route.Path] = route
+    end
     local router = setmetatable({
-        _routes = destruct(params),
+        _routes = params,
         _history = {},
         Type = Symbols.Router,
         Serving = {
