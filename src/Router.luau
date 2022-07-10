@@ -1,5 +1,5 @@
 local Fusion = require(script.Parent.Parent.Fusion)
-local PathAnalyzer = require(script.Parent.PathAnalyzer)
+local PathFormat = require(script.Parent.PathFormat)
 local Symbols = require(script.Parent.Symbols)
 
 local Children = Fusion.Children
