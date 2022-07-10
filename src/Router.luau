@@ -34,20 +34,21 @@ local function archive(tbl: { [any]: any })
     return newTbl
 end
 
-function class:_set(route: Route, params: {[ any]: any }, options: RouteOptions)
+function class:_set(route: Route, params: {[ any]: any }?, options: RouteOptions?)
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
     options = options or {}
+    params = params or {}
     for index, value in route.Meta do
         if value.Type == Symbols.Dynamic then
             route.Meta[index] = value.Value(route, params)
         end
     end
-    self.Serving.Meta:set(route.Meta or {})
-    self.Serving.Path:set(route.Path)
-    self.Serving.Params = params or {}
+    self.Serving.Params = params
     self.Serving.Params.Router = self
-    self.Serving.View:set(route.View)
+    for _, item in { "Meta", "Path", "View" } do
+        self.Serving[item]:set(route[item])
+    end
     if not options.noHistory and self.Serving.Path:get() ~= prevPath then
         local archived = archive(self.Serving)
         archived.Params.Router = nil
