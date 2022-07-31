@@ -2,7 +2,8 @@
 A minimal and lightweight routing library for Fusion.
 
 > **Warning**
-> If trying to install Koute, follow the instructions below but not clone this branch.
+> 
+> Koute only supports Rojo@0.7.2 or above. Those below the supported version will fail to have the source file synced properly.
 
 | Installation Methods | Instructions |
 | ------------- | ------------- |
