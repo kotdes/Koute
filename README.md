@@ -3,7 +3,7 @@ A minimal and lightweight routing library for Fusion.
 
 > **Warning**
 > 
-> Koute only supports Rojo@7.0.2 or above. Those below the supported version will fail to have the source file synced properly.
+> Koute only supports Rojo@7.2.0 or above. Those below the supported version will fail to have the source file synced properly.
 
 | Installation Methods | Instructions |
 | ------------- | ------------- |
