@@ -5,9 +5,7 @@ local Symbols = require(script.Parent.Symbols)
 local Children = Fusion.Children
 local State = Fusion.State
 
-local AVAIL_LIFECYCLES = { "PreSet", "OnSet" }
-
-local class = { Applet = { _index = {} }, _lifecycles = {} }
+local class = {}
 class.__index = class
 
 type RouteOptions = {
@@ -20,12 +18,6 @@ type Route = {
     Meta: { [any]: any },
     View: (any) -> (GuiObject),
     [any]: any, -- this is painful to look at
-}
-
-type Applet = {
-    Name: string,
-    Lifecycles: { [string]: (any) -> () },
-    Public: { [string]: any },
 }
 
 local function archive(tbl: { [any]: any })
@@ -42,25 +34,6 @@ local function archive(tbl: { [any]: any })
     return newTbl
 end
 
-function class:_fireLifecycle(lifecycleName: string, ...)
-    assert(table.find(AVAIL_LIFECYCLES, lifecycleName), ("Got %s, invalid lifecycle method"):format(lifecycleName))
-    local threads = table.create(#self._lifecycles, false)
-    local currentThread = 1
-    local function next()
-        threads[currentThread] = true
-    end
-    for index, lifecycle in self._lifecycles do
-        currentThread = index
-        lifecycle(next, {...})
-        if threads[currentThread] then
-            continue
-        else
-            return false
-        end
-    end
-    return true
-end
-
 function class:_set(route: Route, params: {[ any]: any }?, options: RouteOptions?)
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
@@ -69,11 +42,6 @@ function class:_set(route: Route, params: {[ any]: any }?, options: RouteOptions
     for index, value in route.Meta do
         if value.Type == Symbols.Dynamic then
             route.Meta[index] = value.Value(route, params)
-        end
-    end
-    if not options.forceSet then
-        if not self:_fireLifecycle("PreSet", route, params) then
-            return false
         end
     end
     self.Serving.Params = params
@@ -85,9 +53,6 @@ function class:_set(route: Route, params: {[ any]: any }?, options: RouteOptions
         local archived = archive(self.Serving)
         archived.Params.Router = nil
         table.insert(self._history, archived)
-    end
-    if not options.forceSet then
-        task.spawn(self:_fireLifecycle("OnSet", route, params))
     end
     return true
 end
@@ -106,20 +71,6 @@ function class:back(level: number?)
     if match then
         self:_set(match, match.Params, { noHistory = true })
     end
-end
-
-function class.Applet:attach(applet: Applet)
-    assert(self.Applet._index[applet.Name], ("Got %s, an applet name that has been attached"):format(applet.Name))
-    for name, func in applet.Lifecycles do
-        assert(table.find(AVAIL_LIFECYCLES, name), ("Got %s, invalid lifecycle method"):format(name))
-        table.insert(self._lifecycles, func)
-    end
-    self.Applet._index[applet.Name] = applet.Public
-end
-
-function class.Applet:use(appletName: string)
-    assert(self.Applet._index[appletName], ("Got %s, unattached applet"):format(appletName))
-    return self.Applet._index[appletName]
 end
 
 return function(params)
