@@ -54,10 +54,9 @@ local function compareAndMerge(toCompare, compareWith)
     return toCompare
 end
 
+function class:_set(route: Route, params: { [any]: any }, options: RouteOptions)
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
-    options = options or {}
-    params = params or {}
     for index, value in route.Meta do
         if value.Type == Symbols.Dynamic then
             route.Meta[index] = value.Value(route, params)
