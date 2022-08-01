@@ -73,6 +73,15 @@ New "ScreenGui" {
         Canvas {
             Source = appRouter,
         },
+        New "Frame" {
+            BorderSizePixel = 1,
+            Size = UDim2.fromScale(0.5, 0.5),
+            [Children] = {
+                Canvas {
+                    Source = appRouter,
+                }
+            }
+        }
     },
 }
 
