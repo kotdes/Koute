@@ -20,6 +20,16 @@ type Route = {
     [any]: any, -- this is painful to look at
 }
 
+local DEFAULT_ROUTER_OPTIONS = {
+    DefaultPath = "/",
+    MaxHistoryEntry = 3,
+    UseInstanceForView = false,
+}
+
+local DEFAULT_ROUTE_OPTIONS = {
+    DoNotSaveToHistory = false,
+}
+
 local function archive(tbl: { [any]: any })
     local newTbl = {}
     for index, value in tbl do
@@ -34,7 +44,16 @@ local function archive(tbl: { [any]: any })
     return newTbl
 end
 
-function class:_set(route: Route, params: {[ any]: any }?, options: RouteOptions?)
+local function compareAndMerge(toCompare, compareWith)
+    for index, value in compareWith do
+        if toCompare[index] then
+            continue
+        end
+        toCompare[index] = value
+    end
+    return toCompare
+end
+
     local prevPath = self.Serving.Path:get()
     route = table.clone(route)
     options = options or {}
