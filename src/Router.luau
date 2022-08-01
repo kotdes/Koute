@@ -78,18 +78,16 @@ end
 
 function class:go(path: string, params: { [any]: any }?, options: RouteOptions?)
     assert(type(path) == "string", "Passing non-string value to :go(), malfunctioning")
-    local match = self._routes[PathFormat(path)]
-    if match then
-        self:_set(match, params, options)
-    end
+	local match = self._private.routes[PathFormat(path)]
+    assert(match, "No such route with path " .. path)
+	self:_set(match, params or {}, compareAndMerge(options or {}, DEFAULT_ROUTE_OPTIONS))
 end
 
 function class:back(level: number?)
     level = level or 1
-    local match = self._history[#self._history - level]
-    if match then
-        self:_set(match, match.Params, { noHistory = true })
-    end
+	local match = self._private.history[#self._private.history - level]
+	assert(match, "Can not go back any more further")
+	self:_set(match, match.Params, compareAndMerge({ DoNotSaveToHistory = true }, DEFAULT_ROUTE_OPTIONS))
 end
 
 return function(params)
