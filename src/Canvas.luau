@@ -15,7 +15,7 @@ return function(params)
         if typeof(params.Source.Serving.View:get()) == "Instance" then
             page:set(params.Source.Serving.View:get())
         else
-        page:set(params.Source.Serving.View:get()(params.Source.Serving.Params))
+            page:set(params.Source.Serving.View:get()(params.Source.Serving.Params))
         end
         if params.Rendered then params.Rendered() end
     end
