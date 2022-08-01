@@ -66,6 +66,10 @@ end
     self.Serving.Params = params
     self.Serving.Params.Router = self
     for _, item in { "Meta", "Path", "View" } do
+        if item == "View" and self._private.options.UseInstanceForView then
+            self.Serving[item]:set(route[item](self.Serving.Params))
+            continue
+        end
         self.Serving[item]:set(route[item])
     end
     if not options.noHistory and self.Serving.Path:get() ~= prevPath then

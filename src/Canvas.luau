@@ -12,7 +12,11 @@ return function(params)
     local page = State()
     local function render()
         if params.PreRender then params.PreRender() end
+        if typeof(params.Source.Serving.View:get()) == "Instance" then
+            page:set(params.Source.Serving.View:get())
+        else
         page:set(params.Source.Serving.View:get()(params.Source.Serving.Params))
+        end
         if params.Rendered then params.Rendered() end
     end
     local disconnectRenderer = Compat(params.Source.Serving.View):onChange(function()
