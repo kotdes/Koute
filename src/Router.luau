@@ -71,12 +71,18 @@ function class:_set(route: Route, params: { [any]: any }, options: RouteOptions)
         end
         self.Serving[item]:set(route[item])
     end
-    if not options.noHistory and self.Serving.Path:get() ~= prevPath then
+	if not options.DoNotSaveToHistory and self.Serving.Path:get() ~= prevPath then
         local archived = archive(self.Serving)
         archived.Params.Router = nil
-        table.insert(self._history, archived)
+		table.insert(self._private.history, archived)
+        if #self._private.history > self._private.options.MaxHistoryEntry then
+            if self._private.options.UseInstanceForView and self._private.history[1].View:get() then
+                self._private.history[1].View:get():Destroy()
+                self._private.history[1].View:set()
     end
-    return true
+            table.remove(self._private.history, 1)
+        end
+	end
 end
 
 function class:go(path: string, params: { [any]: any }?, options: RouteOptions?)
