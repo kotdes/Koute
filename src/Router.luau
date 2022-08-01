@@ -108,22 +108,28 @@ return function(params)
         end
         return items
     end
-    params = destruct(params)
-    for index, route in params do
-        params[index] = nil
-        params[route.Path] = route
-    end
     local router = setmetatable({
-        _routes = params,
-        _history = {},
+        _private = {
+            routes = destruct(params[Children]),
+            history = {},
+            options = compareAndMerge(params, DEFAULT_ROUTER_OPTIONS),
+        },
         Type = Symbols.Router,
         Serving = {
             Path = State(),
             View = State(function() end),
             Meta = State({}),
             Params = {},
-        }
+		},
     }, class)
-    router:go(params.DefaultPath or "/")
+    router._private.options[Children] = nil
+	for index, route in router._private.routes do
+        if type(index) == "number" then
+            router._private.routes[index] = nil
+            router._private.routes[route.Path] = route
+        end
+    end
+
+	router:go(router._private.options.DefaultPath)
     return router
 end
