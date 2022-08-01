@@ -100,10 +100,12 @@ return function(params)
             newRoute[Children] = nil
             table.insert(items, newRoute)
         end
-        for _, route in node[Children] or {} do
+		for _, route in node[Children] or node do
+            if type(route) == "table" and route.Type == Symbols.Route then
             for _, item in destruct(route) do
                 item.Path = PathFormat((node.Path or "") .. item.Path)
                 table.insert(items, item)
+                end
             end
         end
         return items
