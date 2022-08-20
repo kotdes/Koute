@@ -132,12 +132,12 @@ return function(params)
 		},
 	}, class)
     router._private.options[Children] = nil
+
+	local _tmp_tbl = {}
 	for index, route in router._private.routes do
-        if type(index) == "number" then
-            router._private.routes[index] = nil
-            router._private.routes[route.Path] = route
-        end
+		_tmp_tbl[route.Path] = route
     end
+	router._private.routes = _tmp_tbl
 
 	router:go(router._private.options.DefaultPath)
 	return router
