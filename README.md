@@ -7,7 +7,7 @@ A minimal and lightweight routing library for Fusion.
 
 | Installation Methods | Instructions |
 | ------------- | ------------- |
-| Wally | Append `Koute = "7kayoh/koute@0.1.2"` into `wally.toml` |
+| Wally | Append `Koute = "7kayoh/koute@0.1.3"` into `wally.toml` |
 | Binary (`.rbxm`) | Coming Soon |
 | Source Code | Download source code from the [latest release](https://github.com/koterahq/koute/releases) |
 
