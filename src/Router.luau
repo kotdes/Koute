@@ -33,7 +33,7 @@ local DEFAULT_ROUTE_OPTIONS = {
 local function archive(tbl: { [any]: any })
 	local newTbl = {}
 	for index, value in tbl do
-		if value.Type == "State" and value.get then
+		if value.type == "State" and value.get then
 			newTbl[index] = value:get()
 		elseif type(value) == "table" then
 			newTbl[index] = table.clone(value)
