@@ -134,7 +134,7 @@ return function(params)
     router._private.options[Children] = nil
 
 	local _tmp_tbl = {}
-	for index, route in router._private.routes do
+	for _, route in router._private.routes do
 		_tmp_tbl[route.Path] = route
     end
 	router._private.routes = _tmp_tbl
