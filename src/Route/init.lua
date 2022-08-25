@@ -1,5 +1,5 @@
-local function Route(routePath: string)
-    return function(parameters: {any})
+local function Route(routePath)
+    return function(parameters)
         parameters.type = "Route"
         parameters.path = routePath
         return parameters

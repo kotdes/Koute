@@ -10,6 +10,7 @@ local Compat = Fusion.Compat
 local Children = Fusion.Children
 
 local class = {
+    type = "router",
     history = {},
     serving = {
         path = State(""),
@@ -48,7 +49,7 @@ local function unpackRoutes(route)
     return routes
 end
 
-function class:set(route, params: { any }, direction: string)
+function class:set(route, params, direction)
     if direction == "go" and currentlyAt ~= #self.history then
         for i = currentlyAt + 1, #self.history do
             table.remove(self.history, i)
@@ -66,13 +67,13 @@ function class:set(route, params: { any }, direction: string)
     end
 end
 
-function class:go(path: string, params: { any }?)
+function class:go(path, params)
     local route = self.routes[formatPath(path)]
     assert(route, "this route does not exist")
     class:set(route, params or {}, "go")
 end
 
-function class:back(level: number?)
+function class:back(level: number)
     level = level or 1
     local route = self.history[#self.history - level]
     assert(route, "history route does not exist")

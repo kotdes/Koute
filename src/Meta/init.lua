@@ -1,4 +1,4 @@
-local function Meta(fieldName: string)
+local function Meta(fieldName)
     return {
         type = "Symbol",
         name = "Meta",
