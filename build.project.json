@@ -1,0 +1,12 @@
+{
+  "name": "koute",
+  "tree": {
+    "$className": "Folder",
+    "Packages": {
+      "$path": "Packages",
+      "Koute": {
+        "$path": "src"
+      }
+    }
+  }
+}
