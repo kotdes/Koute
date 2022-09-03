@@ -17,10 +17,7 @@ local function Canvas(props)
         if typeof(children:get()) == "Instance" then
             children:get():Destroy()
         end
-        children:set(props.Source.serving.view:get()({
-            Router = props.Source,
-            Context = props.Source.serving,
-        }))
+        children:set(props.Source.serving.view:get()(props.Source, props.Source.serving))
         if props.PostRender then
             props.PostRender()
         end
