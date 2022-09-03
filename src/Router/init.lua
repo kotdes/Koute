@@ -27,7 +27,7 @@ local function updateServing(class, route, params)
     class.serving.path:set(route.path)
     class.serving.meta:set(route.meta)
     class.serving.params = params
-    class.serving.meta:set(route.view)
+    class.serving.view:set(route.view)
 end
 
 local function unpackRoutes(route)
