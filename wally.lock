@@ -3,8 +3,8 @@
 registry = "test"
 
 [[package]]
-name = "7kayoh/koute-preview"
-version = "0.2.0"
+name = "7kayoh/koute"
+version = "1.0.0"
 dependencies = [["Fusion", "elttob/fusion@0.1.1-beta"]]
 
 [[package]]
