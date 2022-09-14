@@ -3,7 +3,7 @@ name = "7kayoh/koute"
 description = "Koute. Routing in Fusion supercharged."
 license = "MIT"
 author = ["7kayoh<shigoto@7kayoh.net>"]
-version = "1.0.0"
+version = "1.0.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 

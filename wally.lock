@@ -4,7 +4,7 @@ registry = "test"
 
 [[package]]
 name = "7kayoh/koute"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [["Fusion", "elttob/fusion@0.1.1-beta"]]
 
 [[package]]
