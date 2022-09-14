@@ -70,7 +70,7 @@ New "ScreenGui" {
         },
 
         Canvas {
-            Source = router,
+            source = router,
         }
     }
 }

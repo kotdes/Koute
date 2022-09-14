@@ -42,9 +42,9 @@ export type RouterParams = {
 }
 
 export type CanvasParams = {
-    Source: Router,
-    PreRender: () -> ()?,
-    PostRender: () -> ()?,
+    source: Router,
+    preRender: () -> ()?,
+    postRender: () -> ()?,
 }
 
 export type Koute = {
