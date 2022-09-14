@@ -7,8 +7,10 @@ Koute is a lightweight and minimal routing library for `Fusion@0.1.1-beta`. Lear
 
 | Installation Methods | Instructions |
 | ------------- | ------------- |
-| Wally | Append `Koute = "7kayoh/koute@1.0.0"` into `wally.toml` |
+| Wally | Append `Koute = "7kayoh/koute@1.0.1"` into `wally.toml` |
 | Binary (`.rbxm`) | Download built binary from the [latest release](https://gitlab.com/koterahq/koute/prod/-/releases) |
 | Source Code | Download source code from the [latest release](https://gitlab.com/koterahq/koute/prod/-/releases) |
+
+> This page may not be up to date with the latest release, you are advised to check [wally.run](https://wally.run/package/7kayoh/koute) for information regarding the latest release available.
 
 `MIT Licensed | Copyright 2022 KoteraHQ and 7kayoh`
