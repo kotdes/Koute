@@ -5,8 +5,10 @@ local Fusion = require(Packages.Fusion)
 local deconstructRoute = require(Koute.Route.deconstructRoute)
 local formatPath = require(Koute.Route.formatPath)
 local doesMetaContainForbiddenValue = require(Koute.Meta.doesMetaContainForbiddenValue)
-local State = Fusion.State
-local Compat = Fusion.Compat
+
+local isUsingNewFusionKeywords = Fusion.version.minor >= 2
+local State = isUsingNewFusionKeywords and Fusion.Value or Fusion.State
+local Compat = isUsingNewFusionKeywords and Fusion.Observer or Fusion.Compat
 local Children = Fusion.Children
 
 local class = {

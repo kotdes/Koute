@@ -1,6 +1,12 @@
 local Packages = script.Parent.Parent
 local Fusion = require(Packages.Fusion)
 
+if Fusion.version.minor >= 2 then
+    type State = Fusion.Value
+else
+    type State = Fusion.State
+end
+
 export type DeconstructedRoute = {
     type: string,
     path: string,
@@ -25,9 +31,9 @@ export type Router = {
     type: string,
     history: {},
     serving: {
-        path: Fusion.State,
-        view: Fusion.State,
-        meta: Fusion.State,
+        path: State,
+        view: State,
+        meta: State,
         params: { any },
     },
     routes: { DeconstructedRoute? },
