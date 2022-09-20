@@ -77,7 +77,7 @@ end
 
 function class:back(level: number)
     level = level or 1
-    local route = self.history[#self.history - level]
+    local route = self.history[#currentlyAt - level]
     assert(route, "history route does not exist")
     currentlyAt = #self.history - level
     class:set(route, route.params, "back")
