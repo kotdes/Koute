@@ -1,10 +1,9 @@
 local Packages = script.Parent.Parent
 local Fusion = require(Packages.Fusion)
 
-local isUsingNewFusionKeywords = Fusion.version.minor >= 2
 local New = Fusion.New
-local State = isUsingNewFusionKeywords and Fusion.Value or Fusion.State
-local Compat = isUsingNewFusionKeywords and Fusion.Observer or Fusion.Compat
+local State = Fusion.State
+local Compat = Fusion.Compat
 local Children = Fusion.Children
 
 local function isDeprecated(props)
