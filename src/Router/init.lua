@@ -13,14 +13,6 @@ local Children = Fusion.Children
 
 local class = {
 	type = "router",
-	history = {},
-	serving = {
-		path = State(""),
-		view = State(),
-		meta = State({}),
-		params = {},
-	},
-	routes = {},
 }
 class.__index = class
 local currentlyAt = 1
@@ -84,7 +76,16 @@ function class:back(level: number?)
 end
 
 return function(params)
-	local router = setmetatable({}, class)
+	local router = setmetatable({
+		history = {},
+		serving = {
+			path = State(""),
+			view = State(),
+			meta = State({}),
+			params = {},
+		},
+		routes = {},
+	}, class)
 	for _, route in params.routes do
 		deconstructRoute(route)
 		for _, route in unpackRoutes(route) do
