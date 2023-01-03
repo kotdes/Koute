@@ -1,5 +1,5 @@
 [package]
-name = "7kayoh/koute"
+name = "koterahq/koute"
 description = "Koute. Routing in Fusion supercharged."
 license = "MIT"
 author = ["7kayoh<nanako@kohq.7kayoh.net>"]
