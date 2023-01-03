@@ -6,7 +6,7 @@ local Meta = require(script.Meta)
 local Canvas = require(script.Canvas)
 
 return {
-    _version = "1.0.2",
+    _version = "1.0.3",
     Meta = Meta,
     Route = Route,
     Router = Router,
