@@ -6,17 +6,7 @@ local State = Fusion.State
 local Compat = Fusion.Compat
 local Children = Fusion.Children
 
-local function isDeprecated(props)
-    for i, v in {Source = "source", PostRender = "postRender", PreRender = "preRender"} do
-        if props[i] then
-            warn(("props.%s is deprecated and will soon be removed, please use props.%s"):format(i, v))
-            props[v] = props[i]
-        end
-    end
-end
-
 local function Canvas(props)
-    isDeprecated(props)
     -- Fusion.Computed lacks destructor function atm, will switch to Fusion.Computed implementation in the future
     local children = State(nil)
     Compat(props.source.serving.view):onChange(function()
