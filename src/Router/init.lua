@@ -64,7 +64,7 @@ end
 function class:go(path: string, params: { any }?)
 	local route = self.routes[formatPath(path)]
 	assert(route, "this route does not exist")
-	class:set(route, params or {}, "go")
+	self:set(route, params or {}, "go")
 end
 
 function class:back(level: number?)
@@ -72,7 +72,7 @@ function class:back(level: number?)
 	local route = self.history[currentlyAt - level]
 	assert(route, "history route does not exist")
 	currentlyAt = #self.history - level
-	class:set(route, route.params, "back")
+	self:set(route, route.params, "back")
 end
 
 return function(params)
