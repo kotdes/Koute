@@ -1,11 +1,11 @@
 [package]
 name = "koterahq/koute"
-description = "Koute. Routing in Fusion supercharged."
+description = "Koute for Fusion~0.2.0. Routing in Fusion supercharged."
 license = "MIT"
 author = ["7kayoh<nanako@kohq.7kayoh.net>"]
-version = "1.0.3"
+version = "1.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
 [dependencies]
-Fusion = "elttob/fusion@0.1.1-beta"
+Fusion = "elttob/fusion~0.2.0"

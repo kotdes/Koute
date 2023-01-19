@@ -1,37 +1,42 @@
 local Packages = script.Parent.Parent
 local Fusion = require(Packages.Fusion)
 
-type State = Fusion.State
+type Value = Fusion.Value
+type Children = Fusion.Children
+type Symbol = Fusion.Symbol
+
+type viewConstructor = ({ router, routerServing }) -> (GuiObject)
+type meta = { [string]: any }
+type routerServing = {
+    path: Value<string>,
+    view: Value<viewConstructor>,
+    meta: Value<meta>,
+    params: { any },
+},
 
 export type DeconstructedRoute = {
     type: string,
     path: string,
-    view: ({ any }) -> (Instance),
-    meta: { [string]: any },
-    [any]: any,
+    view: viewConstructor,
+    meta: meta,
 }
 
 export type Route = {
     type: string,
     path: string,
-    view: ({ any }) -> (Instance),
-    [any]: any,
+    view: viewConstructor,
+    [Children]: { Route }?,
 }
 
 export type RouteParams = {
-    view: ({ any }) -> (Instance),
-    [any]: any,
+    view: viewConstructor
+    [Children]: { Route }?,
 }
 
 export type Router = {
     type: string,
     history: {},
-    serving: {
-        path: State,
-        view: State,
-        meta: State,
-        params: { any },
-    },
+    serving: routerServing,
     routes: { DeconstructedRoute? },
 
     go: (Router, string, { any }) -> (),
@@ -52,7 +57,7 @@ export type CanvasParams = {
 export type Koute = {
     _version: string,
     Route: (string) -> ((RouteParams) -> Route),
-    Meta: (string) -> (Fusion.Symbol),
+    Meta: (string) -> (Symbol),
     Router: (RouterParams) -> (Router),
     Canvas: ({ Source: Router }) -> ( Frame ),
 }

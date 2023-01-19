@@ -2,18 +2,18 @@ local Packages = script.Parent.Parent
 local Fusion = require(Packages.Fusion)
 
 local New = Fusion.New
-local State = Fusion.State
-local Compat = Fusion.Compat
+local Value = Fusion.Value
+local Observer = Fusion.Observer
 local Children = Fusion.Children
 
 local function Canvas(props)
     -- Fusion.Computed lacks destructor function atm, will switch to Fusion.Computed implementation in the future
-    local children = State(nil)
-    Compat(props.source.serving.view):onChange(function()
+    local children = Value(nil)
+    Observer(props.source.serving.view):onChange(function()
         if props.preRender then
             props.preRender()
         end
-        -- Fusion.State is not equipped with destructor function, must be cleaned up manually for now
+        -- Fusion.Value is not equipped with destructor function, must be cleaned up manually for now
         if typeof(children:get()) == "Instance" then
             children:get():Destroy()
         end

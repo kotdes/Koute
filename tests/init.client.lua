@@ -9,7 +9,7 @@ local Fusion = require(Packages.Fusion)
 
 local Children = Fusion.Children
 local New = Fusion.New
-local State = Fusion.State
+local Value = Fusion.Value
 local Router = Koute.Router
 local Route = Koute.Route
 local Canvas = Koute.Canvas
@@ -26,7 +26,7 @@ local function createDemoFrame(props)
     }
 end
 
-local actionState = State("None")
+local actionState = Value("None")
 local router = Router {
     routes = {
         Route "/" {

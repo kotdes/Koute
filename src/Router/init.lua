@@ -7,8 +7,8 @@ local deconstructRoute = require(Koute.Route.deconstructRoute)
 local formatPath = require(Koute.Route.formatPath)
 local doesMetaContainForbiddenValue = require(Koute.Meta.doesMetaContainForbiddenValue)
 
-local State = Fusion.State
-local Compat = Fusion.Compat
+local Value = Fusion.Value
+local Observer = Fusion.Observer
 local Children = Fusion.Children
 
 local class = {
@@ -79,9 +79,9 @@ return function(params)
 	local router = setmetatable({
 		history = {},
 		serving = {
-			path = State(""),
-			view = State(),
-			meta = State({}),
+			path = Value(""),
+			view = Value(),
+			meta = Value({}),
 			params = {},
 		},
 		routes = {},
@@ -93,7 +93,7 @@ return function(params)
 		end
 	end
 
-	Compat(router.serving.meta):onChange(function()
+	Observer(router.serving.meta):onChange(function()
 		for _, meta in router.serving.meta:get() do
 			doesMetaContainForbiddenValue(meta)
 		end
