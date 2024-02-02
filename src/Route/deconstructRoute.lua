@@ -25,7 +25,7 @@ local function deconstructRoute(route, prevPath: string?)
         elseif typeof(key) == "table" and key.type == "Symbol" then
             if key.name == "Meta" then
                 doesMetaContainForbiddenValue(value)
-                toBind[key.name] = value
+                toBind[key.key] = value
                 route[key] = nil
             else
                 error(key.name .. " is not an acceptable symbol value in Koute.Route")
