@@ -1,7 +1,7 @@
 local Koute = script.Parent
 local Packages = script.Parent.Parent
 
-local Types = require(script.Parent.Types)
+
 local Fusion = require(Packages.Fusion)
 local deconstructRoute = require(Koute.Route.deconstructRoute)
 local formatPath = require(Koute.Route.formatPath)
@@ -17,7 +17,7 @@ local class = {
 class.__index = class
 local currentlyAt = 1
 
-local function updateServing(class: Types.Router, route: Types.DeconstructedRoute, params: { any })
+local function updateServing(class, route, params)
 	class.serving.path:set(route.path)
 	class.serving.meta:set(route.meta)
 	class.serving.params = params
@@ -43,7 +43,7 @@ local function unpackRoutes(route)
 	return routes
 end
 
-function class:set(route: Types.DeconstructedRoute, params: { any }, direction: string)
+function class:set(route, params, direction)
 	if direction == "go" and currentlyAt ~= #self.history then
 		for i = currentlyAt + 1, #self.history do
 			table.remove(self.history, i)
@@ -61,13 +61,13 @@ function class:set(route: Types.DeconstructedRoute, params: { any }, direction: 
 	end
 end
 
-function class:go(path: string, params: { any }?)
+function class:go(path, params)
 	local route = self.routes[formatPath(path)]
 	assert(route, "this route does not exist")
 	self:set(route, params or {}, "go")
 end
 
-function class:back(level: number?)
+function class:back(level)
 	level = level or 1
 	local route = self.history[currentlyAt - level]
 	assert(route, "history route does not exist")
